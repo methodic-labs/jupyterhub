@@ -8,7 +8,7 @@ proxy:
 singleuser:
   image:
     name: 739431317631.dkr.ecr.us-gov-west-1.amazonaws.com/openlattice/jupyterhub-k8s-datascience
-    tag: 0.0.4
+    tag: 0.0.7
   storage:
     type: "static"
     static:
@@ -18,10 +18,6 @@ singleuser:
     CHOWN_HOME: 'yes'
   uid: 0
   fsGid: 0
-  lifecycleHooks:
-    postStart:
-      exec:
-        command: ["pip", "install", "-e", "git+https://github.com/Lattice-Works/api-clients.git#egg=openlattice&subdirectory=python"]
   cmd: "start-singleuser.sh"
 hub:
   extraEnv:
