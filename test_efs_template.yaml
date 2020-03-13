@@ -1,0 +1,12 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: efs-persist
+spec:
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 123Gi
+  nfs:
+    server: EFS_ID.efs.us-gov-west-1.amazonaws.com
+    path: "/"
