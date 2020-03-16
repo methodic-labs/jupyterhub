@@ -17,7 +17,7 @@ kubectl config set-context "$(kubectl config current-context)" --namespace "$NAM
 
 kubectl get pod
 
-echo "Jupyterhub starting up"
+echo "Jupyterhub starting up; Please create EFS cluster and appropriate security groups"
 
 time until kubectl get service; do sleep 15; done
 

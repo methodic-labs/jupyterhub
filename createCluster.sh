@@ -10,7 +10,7 @@ else
 fi
 
 # Assumes a key named 'cluster_rsa' exists
-kops create cluster "$CLUSTER_NAME" --zones "us-gov-west-1a,us-gov-west-1b,us-gov-west-1c" --authorization RBAC --master-size t2.micro --master-volume-size 10 --node-size t2.medium --image 739431317631/k8s-node-openlattice $PRIVATE_OPTIONS--node-volume-size 10 --ssh-public-key ./cluster_rsa.pub --yes
+kops create cluster "$CLUSTER_NAME" --zones "us-gov-west-1a,us-gov-west-1b,us-gov-west-1c" --authorization RBAC --master-size t2.small --master-volume-size 20 --node-size t2.large --image 739431317631/k8s-node-openlattice $PRIVATE_OPTIONS--node-volume-size 20 --ssh-public-key ./cluster_rsa.pub --yes
 
 time until kops validate cluster; do sleep 15; done
 
