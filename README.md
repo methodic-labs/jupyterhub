@@ -1,6 +1,7 @@
 
 To set this up:
 - Create an EC2 with a bunch of permissions as per https://zero-to-jupyterhub.readthedocs.io/en/latest/
+- Add auth0 api keys to the end of helm_config_template.yaml
 - run the scripts in this repo in the following order:
   - ./createCluster.sh
   - wait for completion
