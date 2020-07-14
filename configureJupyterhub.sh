@@ -11,7 +11,7 @@ sed "s/PROXY_TOKEN/$PROXY_TOKEN/g" helm_config_template.yaml > config.yaml
 # maybe run certbot to generate a cert and dns-cloudflare plugin to update DNS to point to the IP we get here
 # certbot certonly --dns-cloudflare --dns-cloudflare-credentials ~/.secrets/certbot/cloudflare.ini --dns-cloudflare-propagation-seconds 60 -d jupyterhub.openlattice.com
 
-helm upgrade --install "$RELEASE" jupyterhub/jupyterhub --namespace "$NAMESPACE" --version=0.8.2 --values config.yaml
+helm upgrade --install "$RELEASE" jupyterhub/jupyterhub --atomic --force --namespace "$NAMESPACE" --version=0.9.0-beta4 --values config.yaml
 
 kubectl config set-context "$(kubectl config current-context)" --namespace "$NAMESPACE"
 

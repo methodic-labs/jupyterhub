@@ -10,7 +10,7 @@ else
 fi
 
 # Assumes a key named 'cluster_rsa' exists
-kops create cluster "$CLUSTER_NAME" --zones "us-gov-west-1a,us-gov-west-1b,us-gov-west-1c" --authorization RBAC --master-size t2.small --master-volume-size 20 --node-size t2.large --image 739431317631/k8s-node-openlattice $PRIVATE_OPTIONS--node-volume-size 20 --ssh-public-key ./cluster_rsa.pub --yes
+kops create cluster "$CLUSTER_NAME" --zones "us-gov-west-1a,us-gov-west-1b,us-gov-west-1c" --authorization RBAC --master-size t2.large --master-volume-size 20 --node-size t2.xlarge --image openlattice/jupyterhub-datascience $PRIVATE_OPTIONS--node-volume-size 20 --ssh-public-key ./cluster_rsa.pub --yes
 
 time until kops validate cluster; do sleep 15; done
 
@@ -19,7 +19,7 @@ kubectl get nodes
 if [ ! -z "$PRIVATE_OPTIONS" ]
 then
   # not sure about --image, may have to manually edit the config file to add it in :(
-  kops create instancegroup bastions --role Bastion --subnet utility-us-gov-west-1a --name "$CLUSTER_NAME" --image 739431317631/k8s-node-openlattice --edit false
+  kops create instancegroup bastions --role Bastion --subnet utility-us-gov-west-1a --name "$CLUSTER_NAME" --image openlattice/jupyterhub-datascience --edit false
 
   kops update cluster "$CLUSTER_NAME" --yes
 
