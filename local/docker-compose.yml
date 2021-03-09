@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  jupyterhub:
+    build: jupyterhub
+    image: jupyterhub_img
+    container_name: jupyterhub
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - jupyterhub_data:/srv/jupyterhub
+    environment:
+      - DOCKER_JUPYTER_CONTAINER=jupyterhub-datascience_img
+      - HUB_IP=jupyterhub
+      - DOCKER_NETWORK_NAME=${DOCKER_NETWORK_NAME}
+      - HOST
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:${HOST}"
+    restart: on-failure
+
+  jupyterhub-datascience:
+    build: jupyterhub-datascience
+    image: jupyterhub-datascience_img
+    container_name: jupyterhub-ds-toss
+    network_mode: none
+    command: echo
+
+  reverse-proxy:
+    image: traefik:1.7
+    container_name: reverse-proxy
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - ./reverse-proxy/traefik.toml:/etc/traefik/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: on-failure
+
+volumes:
+  jupyterhub_data:
+
+networks:
+  default:
+    external:
+      name: ${DOCKER_NETWORK_NAME}

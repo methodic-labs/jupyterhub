@@ -1,0 +1,3 @@
+[submodule "local/jupyterhub-datascience"]
+	path = local/jupyterhub-datascience
+	url = git@github.com:openlattice/jupyterhub-datascience.git
