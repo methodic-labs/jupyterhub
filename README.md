@@ -11,5 +11,6 @@ To set this up:
   - Create a security group allowing NFS traffic to nodes and masters sgs
   - create an EFS cluster that uses above SG for all three SGs
   - ./setupNamespaceStorage.sh <efs id>
-  - helm upgrade jupyterhub jupyterhub/jupyterhub --version=0.8.2 --values config.yaml
-  - Update auth0 to have this proxy in the allowed urls as well
+  - helm upgrade jupyterhub jupyterhub/jupyterhub --version=0.10.6 --values config.yaml
+  - Update auth0 to have this proxy in the allowed urls as well # Shouldn't be needed now that jupyterhub.openlattice.com exists
+  - May have to do a `kubectl delete pod autohttps-####` b/c autohttps will fail until DNS is updated with the correct ELB. Don't worry, the autohttps service will auto start back up after delete

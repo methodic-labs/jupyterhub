@@ -2,4 +2,4 @@
 
 . setEnvVars.sh
 
-kops edit cluster $CLUSTER_NAME
+kops edit cluster $NAME

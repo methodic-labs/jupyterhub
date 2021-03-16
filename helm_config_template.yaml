@@ -1,6 +1,8 @@
 proxy:
   secretToken: PROXY_TOKEN
   https:
+    enabled: true
+    type: letsencrypt
     hosts:
       - jupyterhub.openlattice.com
     letsencrypt:
@@ -8,7 +10,7 @@ proxy:
 singleuser:
   image:
     name: openlattice/jupyterhub-datascience
-    tag: 0.0.7
+    tag: latest
   storage:
     type: "static"
     static:
@@ -34,6 +36,7 @@ hub:
         'adduser', '-q', '--gecos', '""', '--disabled-password', '--force-badname'
       ]
       c.Auth0OAuthenticator.scope = ['openid', 'email', 'profile']
+      c.Auth0OAuthenticator.auth0_subdomain = 'openlattice'
       c.Authenticator.auto_login = True
       c.Authenticator.admin_users = {
         'drew@openlattice.com',
@@ -41,6 +44,7 @@ hub:
       }
 
       """
+      oauth_callback_url: https://ac702b0ff12ef4afeb0c7c925169070d-359963349.us-gov-west-1.elb.amazonaws.com/hub/oauth_callback
       Custom Authenticator to use Auth0 OAuth with JupyterHub
       Derived using the Github and Google OAuthenticator implementations as examples.
       The following environment variables may be used for configuration:
@@ -57,6 +61,7 @@ auth:
   custom:
     className: oauthenticator.auth0.Auth0OAuthenticator
     config:
-      client_id: ""
-      client_secret: ""
-      oauth_callback_url: "https://OAUTH_HOST/hub/oauth_callback"
+      auth0_subdomain: "openlattice"
+      client_id: "xO4GpHCkxFa5D1MM1RC9D5zttrNhk6FL"
+      client_secret: "RYjJQG3MiVsGRRsZ7l0WAYzprpN2u_TMsJIlq-vCB-UyyClhKbTGiqxXeEJD2xkJ"
+      oauth_callback_url: "https://jupyterhub.openlattice.com/hub/oauth_callback"
