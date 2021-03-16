@@ -16,6 +16,7 @@ To set this up:
   - May have to do a `kubectl delete pod autohttps-####` b/c autohttps will fail until DNS is updated with the correct ELB. Don't worry, the autohttps service will auto start back up after delete
 
 To run jupyterhub locally:
+  - `git submodule init; git submodule update`
   - Install docker: https://desktop.docker.com/mac/stable/Docker.dmg
   - Start docker
   - go into  the `local/ subdirectory
