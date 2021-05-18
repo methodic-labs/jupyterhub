@@ -1,5 +1,5 @@
 
-To set this up:
+To set this up in production:
 - Create an EC2 with a bunch of permissions as per https://zero-to-jupyterhub.readthedocs.io/en/latest/
 - Add auth0 api keys to the end of helm_config_template.yaml
 - run the scripts in this repo in the following order:
@@ -23,5 +23,4 @@ To run jupyterhub locally:
   - run `./startStack.sh`
   - navigate to http://localhost/
   - login with any username and the password `openlattice`
-
-<h4>Be sure to run ./stopStack.sh</h4> when you're done or it will run forever and eat a lot of system resources
+  <h4>Be sure to run ./stopStack.sh</h4> when you're done or it will run forever and eat a lot of system resources
