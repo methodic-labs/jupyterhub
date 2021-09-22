@@ -14,8 +14,6 @@ kops create cluster \
   --image ami-84556de5 \
   --ssh-public-key ./cluster_rsa.pub --yes
 
-#  --image openlattice/jupyterhub-datascience $PRIVATE_OPTIONS --ssh-public-key ./cluster_rsa.pub --yes
-
 time until kops validate cluster; do sleep 15; done
 
 kubectl get nodes
