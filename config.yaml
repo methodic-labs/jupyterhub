@@ -28,7 +28,7 @@ hub:
   config:
     Auth0OAuthenticator:
       client_id: "xO4GpHCkxFa5D1MM1RC9D5zttrNhk6FL"
-      client_secret: "RYjJQG3MiVsGRRsZ7l0WAYzprpN2u_TMsJIlq-vCB-UyyClhKbTGiqxXeEJD2xkJ"
+      client_secret: {{INSERT_CLIENT_SECRET}}
       oauth_callback_url: "https://jupyterhub.openlattice.com/hub/oauth_callback"
       scope:
         - openid
