@@ -1,0 +1,44 @@
+proxy:
+  https:
+    enabled: true
+    type: letsencrypt
+    hosts:
+      - jupyterhub.openlattice.com
+    letsencrypt:
+      contactEmail: "parthenon@openlattice.com"
+singleuser:
+  image:
+    name: openlattice/jupyterhub-datascience
+    tag: latest
+  storage:
+    type: "static"
+    static:
+      pvcName: "efs-persist"
+      subPath: 'home/{username}'
+  extraEnv:
+    CHOWN_HOME: 'yes'
+  uid: 0
+  fsGid: 0
+  lifecycleHooks:
+    postStart:
+      exec:
+        command: ["pip", "install", "-e", "git+https://github.com/Lattice-Works/api-clients.git#egg=openlattice&subdirectory=python"]
+  cmd: "start-singleuser.sh"
+hub:
+  config:
+    Auth0OAuthenticator:
+      client_id: "xO4GpHCkxFa5D1MM1RC9D5zttrNhk6FL"
+      client_secret: {{INSERT_CLIENT_SECRET}}
+      oauth_callback_url: "https://jupyterhub.openlattice.com/hub/oauth_callback"
+      scope:
+        - openid
+        - email
+        - profile
+      auth0_subdomain: openlattice
+    Authenticator:
+      admin_users:
+        - matthew@openlattice.com
+        - hristo@openlattice.com
+      auto_login: true
+    JupyterHub:
+      authenticator_class: auth0

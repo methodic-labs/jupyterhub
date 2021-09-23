@@ -5,15 +5,22 @@ To set this up in production:
 - run the scripts in this repo in the following order:
   - `./createCluster.sh`
   - wait for completion
+  -  ./setupWeaveSecrets.sh
+  - wait for completion
+  - (Optional) Setup NFS following directions here: https://zero-to-jupyterhub.readthedocs.io/en/latest/kubernetes/amazon/efs_storage.html#amazon-efs
+    - The NFS security group should only be applied to mount endpoints. 
+    - The SGs for nodes and master should reference that NFS security group to allow incoming NFS traffic and the NFS security group should allow incoming NFS traffic from nodes and masters.
+    - The NFS security group must be removed before attempting to delete the cluster otherwise it will hang on trying to delete the VPC. 
+    - `./setupNamespaceStorage.sh <efs id>` automates the remaining steps.
   - `./configureJupyterHub.sh`
   - wait for completion
-  - Update config.yaml to have a correct oauth_callback_url pointing at the proxy, ending in `/hub/oauth_callback`
-  - Create a security group allowing NFS traffic to nodes and masters sgs
-  - create an EFS cluster that uses above SG for all three SGs
-  - `./setupNamespaceStorage.sh <efs id>`
-  - `helm upgrade jupyterhub jupyterhub/jupyterhub --version=0.10.6 --values config.yaml`
-  - Update auth0 to have this proxy in the allowed urls as well # Shouldn't be needed now that jupyterhub.openlattice.com exists
+  - Update DNS CNAME record for jupyterhub.openlattice.com to point at new load balancer URL (if needed)  
+  - (Optional) Update auth0 to have this proxy in the allowed urls as well # Shouldn't be needed now that jupyterhub.openlattice.com exists
   - May have to do a `kubectl delete pod autohttps-####` b/c autohttps will fail until DNS is updated with the correct ELB. Don't worry, the autohttps service will auto start back up after delete
+
+To pick up future changes in config simply run:
+
+`helm upgrade jupyterhub jupyterhub/jupyterhub --version=1.1.3 --values config.yaml`
 
 To run jupyterhub locally:
   - `git submodule init; git submodule update`

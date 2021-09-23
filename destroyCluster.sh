@@ -8,8 +8,4 @@ kubectl delete namespace "$NAMESPACE"
 
 kubectl delete persistentvolume "$PV_NAME"
 
-kops delete cluster "$NAME" --yes
-
-rm config.yaml
-
-rm test_efs.yaml
+kops delete cluster "$KOPS_CLUSTER_NAME" --yes
